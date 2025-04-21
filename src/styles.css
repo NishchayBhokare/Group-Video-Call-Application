@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0px;
+}
+
+/* adding css for light color text */
+.lightText{ 
+    font-size: 2vh;
+    color: white;
+}

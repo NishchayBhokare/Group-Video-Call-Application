@@ -1,0 +1,82 @@
+
+<div class="videoScreenDiv">
+    <!-- Using Grid system. -->
+    <div class="screenLayout row"> 
+        <!-- Left side User Display View -->
+        <div [ngClass]="isMsgBoxOpen? 'col-9' : 'col-12'" class="users">
+            <div class="row itemRow">
+                <div *ngFor="let personName of personArr[0]; let i=index" class="col-4 lightText rowItems">
+                    <!-- one way data binding-> String interpolation -->
+                    <span class="personName">{{personName}}</span> 
+                    <img [ngClass]="isMsgBoxOpen? 'personIconsWithoutMsgBox': 'personIcons'" class="img-fluid" [src]="personImgArr[0][i]" alt="Person Img">
+                    <img title="Unmute Microphone" [ngClass]="isMsgBoxOpen? 'personMicWithMsgBox' : 'personMicWithoutMsgBox'" src="assets/images/mic-mute-fill.svg" alt="Mute Microphone Image">
+                </div>
+            </div>
+
+            <div class="row itemRow">
+                <div *ngFor="let personName of personArr[1]; let i=index" class="col-4 lightText rowItems">
+                    <span class="personName">{{personName}}</span>
+                    <img [ngClass]="isMsgBoxOpen? 'personIconsWithoutMsgBox': 'personIcons'" class="img-fluid" [src]="personImgArr[1][i]" alt="Person Img">
+                    <img title="Unmute Microphone" [ngClass]="isMsgBoxOpen? 'personMicWithMsgBox' : 'personMicWithoutMsgBox'" src="assets/images/mic-mute-fill.svg" alt="Mute Microphone Image">
+                </div>
+            </div>
+            <div class="row itemRow">
+               <div *ngFor="let personName of personArr[2]; let i=index" class="col-4 lightText rowItems">
+                    <span class="personName">{{personName}}</span>
+                    <img [ngClass]="isMsgBoxOpen? 'personIconsWithoutMsgBox': 'personIcons'" class="img-fluid" [src]="personImgArr[2][i]" alt="Person Img">
+                    <img *ngIf="i!=1" title="Unmute Microphone" [ngClass]="isMsgBoxOpen? 'personMicWithMsgBox' : 'personMicWithoutMsgBox'" src="assets/images/mic-mute-fill.svg" alt="Mute Microphone Image">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Right side Message box view -->
+        <div *ngIf="isMsgBoxOpen" class="commentBox col-3">
+            <div class="commenDetails">
+                <div class="msgBoxHeading">Messages</div>
+                
+                <div class="personMsgs">
+                    <div *ngFor="let personMsg of personsMsgArr" class="msgInfo">
+                        <strong>{{personMsg[0]}}: </strong>
+                        {{personMsg[1]}}
+                    </div>
+    
+                    <div *ngFor="let msg of msgArr" class="msgInfo">
+                        <strong>You: </strong>
+                        {{msg}}
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="inputField">
+
+                <!-- ngModel is used for two way data binding.  -->
+                <input tabindex="0" class="typeHereInput"  [(ngModel)]="inputMsg" type="text" placeholder="Type here...">
+                <img *ngIf="inputMsg" tabindex="0" class="sendMsgIcon" (keydown.enter)="sendMsg()" (click)="sendMsg()" src="assets/images/send_message.png" alt="Send Message">
+                <img *ngIf="!inputMsg" class="disabled_send"  src="assets/images/disabled_send.jpg" alt="Disabled Send Message">
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Different options available for user interatction like Mute/Unmute, Comment, Disconnect call etc. -->
+    <div [ngClass]="isMsgBoxOpen? 'optionsRow_withMsgBox' : 'optionsRow_withoutMsgBox'" class="optionsRow">
+        <span class="optionSpacing">
+            <img tabindex="0" *ngIf="isVideoShare" title="Stop share Screen" class="videoImg" (click)="handleScreen()" (keydown.enter)="handleScreen()" src="assets/images/camera-video-fill.svg" alt="Share Screen Image">
+            <img tabindex="0"  *ngIf="!isVideoShare" title="Share Screen" class="videoImg" (click)="handleScreen()"  (keydown.enter)="handleScreen()" src="assets/images/camera-video-off-fill.svg" alt="Stop Share Screen Image">
+        </span>
+
+        <span class="optionSpacing">
+            <img tabindex="0"  *ngIf="isMicrophoneMute" title="Unmute Microphone" class="microphoneImg" (click)="handleMicrophone()"  (keydown.enter)="handleMicrophone()" src="assets/images/mic-mute-fill.svg" alt="Mute Microphone Image">
+            <img tabindex="0"  *ngIf="!isMicrophoneMute" title="Mute Microphone" class="microphoneImg" (click)="handleMicrophone()"  (keydown.enter)="handleMicrophone()" src="assets/images/mic-fill.svg" alt="Unmute Microphone Image">
+        </span>
+        <span class="optionSpacing"> 
+            <img tabindex="0" title="Message" (click)="handleMessageBox()"  class="messageImg" src="assets/images/message_img.png" alt="Message Image">
+        </span>
+
+        <span class="optionSpacing"> 
+            <img tabindex="0" title="Disconnect Call" (click)="disconnectCall()"  class="call_disconnect" src="assets/images/call_disconnect.png" alt="Disconnect Call Image">
+        </span>
+    </div>
+</div>
